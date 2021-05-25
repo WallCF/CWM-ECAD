@@ -14,5 +14,29 @@
 //           colour [2:0]
 //
 //  You need to write the whole file.
+
+`timescale 1ns / 100ps
+
+module lighting (
+
+	//ports
+	input clk,
+	input rst,
+	input button,
+	output reg [2:0]colour
+
+	);
+
+// logic
+always @(posedge clk) begin
+
+if(button==1)
+	colour = colour + 1;
+if((colour==3'b0)||(colour==3'b111)||(rst==1))
+	colour = 3'b001;
+
+end
+
+endmodule
 //////////////////////////////////////////////////////////////////////////////////
 

@@ -78,7 +78,7 @@ end
 end
 //Todo: Finish test, check for success
  initial begin
-        #(1000*CLK_PERIOD) 
+        #(500*CLK_Period) 
         if (err==0)
           $display("***TEST PASSED! :) ***");
         $finish;
@@ -89,6 +89,7 @@ monitor top (
 	.rst (rst),
 	.change (change),
 	.on_off (on_off),
+	.clk (clk),
 	.counter_out (counter_out)
 	);
 

@@ -29,13 +29,15 @@ forever
 #(CLK_PERIOD/2) clk=~clk;
 end
 
+
 //User logic
 initial begin
 
 err = 0;
-rst = 0;
+rst = 1;
 button = 0;
-
+#(5*CLK_PERIOD)
+rst = 0;
 forever begin
 prev_colour = colour;
 #CLK_PERIOD
@@ -45,32 +47,62 @@ if(colour>=2'b111)
 	$display("***TEST FAILED! Wrong Colour!");
 	err = 1;
 	end
-if((colour!=prev_colour+1)&&(button==1)&&(rst==0))
+else if((colour!=prev_colour+1)&&(button==1)&&(rst==0))
 	begin
 	$display("***TEST FAILED! Wrong Colour!");
 	err = 1;
 	end
-if((colour!=prev_colour)&&(button==0)&&(rst==0))
+else if((colour!=prev_colour)&&(button==0)&&(rst==0))
 	begin
 	$display("***TEST FAILED! Wrong Colour!");
 	err = 1;
 	end
-if((colour!=3'b001)&&(rst==1))
+else if((colour!=3'b001)&&(rst==1))
 	begin
 	$display("***TEST FAILED! Wrong Colour!");
 	err = 1;
 	end
-if((colour==3'b000)||(colour==3'b111))
+else if((colour==3'b000)||(colour==3'b111))
 	begin
 	$display("***TEST FAILED! Wrong Colour!");
 	err = 1;
 	end
-     end
+     
+#(7*CLK_PERIOD)
+button = 1;
+if(colour>=2'b111)
+	begin
+	$display("***TEST FAILED! Wrong Colour!");
+	err = 1;
+	end
+else if((colour!=prev_colour+1)&&(button==1)&&(rst==0))
+	begin
+	$display("***TEST FAILED! Wrong Colour!");
+	err = 1;
+	end
+else if((colour!=prev_colour)&&(button==0)&&(rst==0))
+	begin
+	$display("***TEST FAILED! Wrong Colour!");
+	err = 1;
+	end
+else if((colour!=3'b001)&&(rst==1))
+	begin
+	$display("***TEST FAILED! Wrong Colour!");
+	err = 1;
+	end
+else if((colour==3'b000)||(colour==3'b111))
+	begin
+	$display("***TEST FAILED! Wrong Colour!");
+	err = 1;
+	end
+     
+
+end
 end
 
 //Finish test, check for success
  initial begin
-        #50 
+        #500
         if (err==0)
           $display("***TEST PASSED! :) ***");
         $finish;
@@ -80,7 +112,6 @@ end
 lighting top (
 	.rst (rst),
 	.button (button),
-	.clk (clk),
 	.colour (colour)
 	);
 

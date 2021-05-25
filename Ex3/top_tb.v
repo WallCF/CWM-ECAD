@@ -22,7 +22,7 @@ reg change;
 reg on_off;
 reg err;
 wire [7:0]counter_out;
-wire [7:0]previous_counter_out;
+reg [7:0]previous_counter_out;
 
 //Todo: Clock generation
 initial begin
@@ -49,8 +49,7 @@ err = 1;
 end
 
 
-begin
-#CLK_PERIOD
+
 
 if((counter_out!=counter_out + 8'b1)&&(on_off==1))
 begin
@@ -66,7 +65,7 @@ err = 1;
 end
 
 
-previous_counter_out = counter_out
+previous_counter_out = counter_out;
 #CLK_PERIOD
 if((change==0)&&(counter_out!=previous_counter_out))
 begin
@@ -74,6 +73,8 @@ $display("***TEST FAILED! There is change for change = 0");
 err = 1;
 end
 
+
+end
 end
 //Todo: Finish test, check for success
  initial begin

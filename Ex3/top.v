@@ -24,7 +24,7 @@ module monitor (
 	input rst,
 	input change,
 	input on_off,
-	output reg counter_out[7:0]
+	output reg [7:0]counter_out
 
     );
                     
@@ -33,14 +33,18 @@ module monitor (
 //Todo: add user logic
 always @(posedge clk) begin
 
-if(change==0)
-counter_out <= #1 counter_out
-if(rst==1)
-counter_out <= #1 8h'0
-if(on_off==1)
-counter_out = counter_out + 1
-else
-counter_out = counter_out - 1
+if(change==0) begin
+counter_out <= counter_out;
+end
+if(rst==1) begin
+counter_out <=  8'b0;
+end
+if(on_off==1) begin
+counter_out <= counter_out + 8'b1;
+end
+else begin
+counter_out <= counter_out - 8'b1;
+end
 end
 
 

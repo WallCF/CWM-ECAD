@@ -33,7 +33,7 @@ always @(posedge clk) begin
 
 if(rst==1)
 	colour <= 3'b001;
-else if((colour<=6)&&(button==1))
+else if((colour<6)&&(button==1))
 	colour <= colour + 3'b1;
 	
 else if (((colour==3'b110)&&(button==1))||(colour==3'b111))

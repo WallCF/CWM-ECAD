@@ -36,63 +36,80 @@ initial begin
 err = 0;
 rst = 1;
 button = 0;
-#(5*CLK_PERIOD)
+prev_colour = 1;
+#CLK_PERIOD
 rst = 0;
+
 forever begin
 prev_colour = colour;
 #CLK_PERIOD
 
-if(colour>=2'b111)
+
+if(colour>3'b111)
 	begin
-	$display("***TEST FAILED! Wrong Colour!");
+	$display("***TEST FAILED! Wrong Colour! (1)");
 	err = 1;
 	end
-else if((colour!=prev_colour+1)&&(button==1)&&(rst==0))
+
+else if((colour!=prev_colour+1)&&(button==1)&&(rst==0)&&(prev_colour!=3'b110))
 	begin
-	$display("***TEST FAILED! Wrong Colour!");
+	$display("***TEST FAILED! Wrong Colour! (2)");
 	err = 1;
 	end
+
 else if((colour!=prev_colour)&&(button==0)&&(rst==0))
 	begin
-	$display("***TEST FAILED! Wrong Colour!");
+	$display("***TEST FAILED! Wrong Colour! (3)");
 	err = 1;
 	end
+else if((colour!=3'b001)&&(prev_colour==3'b110)&&(button==1))
+	begin
+	$display("***TEST FAILED! Wrong Colour! (3.5)");
+	err = 1;
+	end
+
 else if((colour!=3'b001)&&(rst==1))
 	begin
-	$display("***TEST FAILED! Wrong Colour!");
+	$display("***TEST FAILED! Wrong Colour! (4)");
 	err = 1;
 	end
 else if((colour==3'b000)||(colour==3'b111))
 	begin
-	$display("***TEST FAILED! Wrong Colour!");
+	$display("***TEST FAILED! Wrong Colour! (5)");
 	err = 1;
 	end
      
-#(7*CLK_PERIOD)
+
 button = 1;
-if(colour>=2'b111)
+
+if(colour>=3'b111)
 	begin
-	$display("***TEST FAILED! Wrong Colour!");
+	$display("***TEST FAILED! Wrong Colour! (6)");
 	err = 1;
 	end
-else if((colour!=prev_colour+1)&&(button==1)&&(rst==0))
+else if((colour!=prev_colour+1)&&(button==1)&&(rst==0)&&(colour!=3'b110))
 	begin
-	$display("***TEST FAILED! Wrong Colour!");
+	$display("***TEST FAILED! Wrong Colour! (7)");
+	err = 1;
+	end
+else if((colour!=3'b001)&&(prev_colour==3'b110)&&(button==1))
+	begin
+	$display("***TEST FAILED! Wrong Colour! (7.5)");
 	err = 1;
 	end
 else if((colour!=prev_colour)&&(button==0)&&(rst==0))
 	begin
-	$display("***TEST FAILED! Wrong Colour!");
+	$display("***TEST FAILED! Wrong Colour! (8)");
 	err = 1;
 	end
 else if((colour!=3'b001)&&(rst==1))
 	begin
-	$display("***TEST FAILED! Wrong Colour!");
+	$display("***TEST FAILED! Wrong Colour! (9)");
 	err = 1;
 	end
 else if((colour==3'b000)||(colour==3'b111))
 	begin
-	$display("***TEST FAILED! Wrong Colour!");
+	$display("***TEST FAILED! Wrong Colour! (10)");
 	err = 1;
 	end
      
@@ -112,7 +129,8 @@ end
 lighting top (
 	.rst (rst),
 	.button (button),
-	.colour (colour)
+	.colour (colour),
+	.clk (clk)
 	);
 
 endmodule 

@@ -33,11 +33,11 @@ module monitor (
 //Todo: add user logic
 always @(posedge clk) begin
 
-if(change==0) begin
-counter_out <= counter_out;
-end
 if(rst==1) begin
 counter_out <=  8'b0;
+end
+if(change==0) begin
+counter_out <= counter_out;
 end
 if(on_off==1) begin
 counter_out <= counter_out + 8'b1;

@@ -35,42 +35,59 @@ end
 initial begin
 
 err = 0;
-rst = 0;
+rst = 1;
 change = 0;
-on_off = 0;
+on_off = 1;
 
 forever begin
-#CLK_PERIOD
+#(5*CLK_PERIOD)
 
-if((counter_out!=1'b0)&&(rst==1))
+if(counter_out!=1'b0)
 begin
 $display("***TEST FAILED! for rst = 1, counter_out does not equal 0");
 err = 1;
 end
 
 
+rst = 0;
+
+previous_counter_out = counter_out;
+#CLK_PERIOD	
+if(counter_out!=previous_counter_out)
+begin
+$display("***TEST FAILED! There is change for change = 0");
+err = 1;
+end
 
 
-if((counter_out!=counter_out + 8'b1)&&(on_off==1))
+change = 1;
+forever begin
+previous_counter_out = counter_out;
+#CLK_PERIOD
+
+if(counter_out!=previous_counter_out + 8'b1)
 begin
 $display("***TEST FAILED! Counter does not count up for on_off = 1");
 err = 1;
 end
 
+end
 
-if((counter_out!=counter_out - 8'b1)&&(on_off==0))
+
+
+
+change = 1;
+on_off=0;
+forever begin
+previous_counter_out = counter_out;
+#CLK_PERIOD
+
+if(counter_out!=previous_counter_out - 8'b1)
 begin
 $display("***TEST FAILED! Counter does not count down for on_off = 0");
 err = 1;
 end
 
-
-previous_counter_out = counter_out;
-#CLK_PERIOD
-if((change==0)&&(counter_out!=previous_counter_out))
-begin
-$display("***TEST FAILED! There is change for change = 0");
-err = 1;
 end
 
 
@@ -78,7 +95,7 @@ end
 end
 //Todo: Finish test, check for success
  initial begin
-        #(500*CLK_Period) 
+        #500
         if (err==0)
           $display("***TEST PASSED! :) ***");
         $finish;

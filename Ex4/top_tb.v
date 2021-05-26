@@ -36,7 +36,7 @@ initial begin
 err = 0;
 rst = 1;
 button = 0;
-prev_colour = 1;
+prev_colour = 0;
 #CLK_PERIOD
 rst = 0;
 
@@ -81,15 +81,16 @@ else if((colour==3'b000)||(colour==3'b111))
      
 
 button = 1;
-
+prev_colour=colour;
+#CLK_PERIOD
 if(colour>=3'b111)
 	begin
 	$display("***TEST FAILED! Wrong Colour! (6)");
 	err = 1;
 	end
-else if((colour!=prev_colour+1)&&(button==1)&&(rst==0)&&(colour!=3'b110))
+else if((colour!=prev_colour+1)&&(button==1)&&(rst==0)&&(prev_colour!=3'b110))
 	begin
-	$display("***TEST FAILED! Wrong Colour! (7)");
+	$display("***TEST FAILED! Wrong Colour! (7)",colour," ",prev_colour);
 	err = 1;
 	end
 else if((colour!=3'b001)&&(prev_colour==3'b110)&&(button==1))

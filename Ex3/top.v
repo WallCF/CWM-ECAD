@@ -36,10 +36,10 @@ always @(posedge clk) begin
 if(rst==1) begin
 counter_out <=  8'b0;
 end
-if(change==0) begin
+else if((change==0)&&(rst==0)) begin
 counter_out <= counter_out;
 end
-if(on_off==1) begin
+else if((on_off==1)&&(change==1)&&(rst==0)) begin
 counter_out <= counter_out + 8'b1;
 end
 else begin

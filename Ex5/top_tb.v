@@ -32,14 +32,22 @@ initial begin
 err = 0;
 temperature = 20;
 
-#CLK_PERIOD
-forever begin
 
-if(((temperature>20)&&(heating!=5'b0))||((temperature<20)&&(cooling!=5'b0)))
+forever begin
+#CLK_PERIOD
+if( (temperature>20 && heating!=5'b0 ) || (temperature<20 && cooling!=5'b0 ) )
 	begin
 	$display("***TEST FAILED! Wrong AC! (1)");
 	err = 1;
 	end
+else if( (temperature<=18 && heating!=5'b1) || (temperature >=22 && cooling!=5'b1) )
+	begin
+	$display("***TEST FAILED! Wrong AC! (2)");
+	err=0;
+	end
+temperature = temperature + 1;
+if (temperature >=40)
+	temperature = 0;
 
 
 end

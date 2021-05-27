@@ -14,7 +14,7 @@ parameter CLK_PERIOD = 10;
 
 //Registers and Parameters
 reg clk;
-reg temperature;
+reg [4:0]temperature;
 reg err;
 wire heating;
 wire cooling;
@@ -56,16 +56,15 @@ else if((temperature == 5'b10100) && (cooling == 5'b1 || heating == 5'b1))
 	$display("***TEST FAILED! Wrong AC! (4)");
 	err = 1;
 	end
-
-temperature = temperature + 5'b1;
-if (temperature>=5'b11111)
-	temperature = 5'b0;
+temperature <= temperature + 5'b1;
+if (temperature>5'b11111)
+	temperature<=5'b00000;
 
 end
 end
 //Finish test, check for success
  initial begin
-        #100
+        #500
         if (err==0)
           $display("***TEST PASSED! :) ***");
         $finish;

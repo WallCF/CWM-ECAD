@@ -43,8 +43,19 @@ if( (temperature>20 && heating!=5'b0 ) || (temperature<20 && cooling!=5'b0 ) )
 else if( (temperature<=18 && heating!=5'b1) || (temperature >=22 && cooling!=5'b1) )
 	begin
 	$display("***TEST FAILED! Wrong AC! (2)");
-	err=0;
+	err=1;
 	end
+else if( heating == 5'b1 && cooling == 5'b1)
+	begin
+	$display("***TEST FAILED! Wrong AC! (3)");
+	err = 1;
+	end
+else if((temperature == 20) && (cooling == 5'b1 || heating == 5'b1))
+	begin
+	$display("***TEST FAILED! Wrong AC! (4)");
+	err = 1;
+	end
+
 temperature = temperature + 1;
 if (temperature >=40)
 	temperature = 0;

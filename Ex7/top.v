@@ -14,4 +14,42 @@
 //           light [23:0]
 //////////////////////////////////////////////////////////////////////////////////
 
+`timescale 1ns / 100ps
 
+module lighting (
+
+	//ports
+	input clk,
+	input sel,
+	input rst,
+	input button,
+	output reg [23:0]light
+
+	);
+
+wire [2:0]colour;
+wire [23:0]rgb;
+
+lights lights1 (
+	.clk (clk),
+	.rst (rst),
+	.button (button),
+	.colour (colour)
+	);
+
+Colour_Convert Colour_Convert1 (
+	.clk (clk),
+	.colour (colour),
+	.enable (!rst),
+	.rgb (rgb)
+	);
+
+multiplex multiplex1 (
+	.clk (clk),
+	.a (24'hFFFFFF),
+	.b (rgb),
+	.sel (sel),
+	.out (light)
+	);
+
+endmodule

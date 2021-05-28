@@ -21,9 +21,9 @@ set_property IOSTANDARD DIFF_SSTL12 [get_ports clk_n]
 set_property PACKAGE_PIN AY37 [get_ports clk_p]
 set_property IOSTANDARD DIFF_SSTL12 [get_ports clk_p]
 create_clock -name clk_sys -period 10 [get_ports clk_p]
-set_clock_groups -asynchronous -group [get_clocks clk -include_generated_clocks]
 
-set_property PACKAGE_PIN BD12 [get_ports rst_n]
+
+set_property PACKAGE_PIN BD21 [get_ports rst_n]
 set_property IOSTANDARD LVCMOS18 [get_ports rst_n]
 set_property PULLUP true [get_ports rst_n]
 
@@ -48,5 +48,5 @@ set_property IOSTANDARD LVCMOS18 [get_ports temperature_3]
 set_property PACKAGE_PIN AT20 [get_ports temperature_4]
 set_property IOSTANDARD LVCMOS18 [get_ports temperature_4]
 
-///////////////////////////////////////////////////
+
 

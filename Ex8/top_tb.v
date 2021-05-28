@@ -17,6 +17,7 @@ wire clk_n;
 reg clk_p;
 reg [4:0]temperature;
 reg err;
+reg rst_n;
 wire heating;
 wire cooling;
 

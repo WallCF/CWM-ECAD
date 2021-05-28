@@ -23,7 +23,7 @@ module lighting (
 	input sel,
 	input rst,
 	input button,
-	output reg [23:0]light
+	output [23:0]light
 	);
 
 wire [2:0]colour;

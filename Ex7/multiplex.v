@@ -20,7 +20,7 @@
 
 `timescale 1ns / 100ps
 
-module doorbell(
+module multiplex(
     //Todo: define inputs here
     
 	input a,

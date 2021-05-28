@@ -24,7 +24,6 @@ module lighting (
 	input rst,
 	input button,
 	output reg [23:0]light
-
 	);
 
 wire [2:0]colour;
@@ -45,7 +44,6 @@ Colour_Convert Colour_Convert1 (
 	);
 
 multiplex multiplex1 (
-	.clk (clk),
 	.a (24'hFFFFFF),
 	.b (rgb),
 	.sel (sel),

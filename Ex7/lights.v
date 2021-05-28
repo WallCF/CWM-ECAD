@@ -17,7 +17,7 @@
 
 `timescale 1ns / 100ps
 
-module lighting (
+module lights (
 
 	//ports
 	input clk,

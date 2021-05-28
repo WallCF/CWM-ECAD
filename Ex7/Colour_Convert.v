@@ -16,7 +16,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 `timescale 1ns / 100ps
 
-module Col_Convert (
+module Colour_Convert (
 	input clk,
 	input [2:0]colour,
 	input enable,

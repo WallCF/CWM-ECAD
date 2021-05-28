@@ -17,7 +17,7 @@ parameter CLK_PERIOD = 10;
 //Registers and Parameters
 reg clk;
 reg enable;
-reg [2:0]colour
+reg [2:0]colour;
 reg err;
 wire [23:0]rgb;
 reg [23:0]test;
@@ -32,46 +32,31 @@ end
 
 //Logic
 initial begin
+
 enable = 1;
-err = 0;
-colour = 2'b0;
+err=0;
+colour = 3'b0;
 #CLK_PERIOD
-test = rgb;
-#CLK_PERIOD
-colour <= colour + 24'b1
-#CLK_PERIOD
+if(rgb!=24'b0)
+	begin
+	$display("***TEST FAILED! Wrong colour (1)");
+	err = 1;
+	end
 
 forever begin
-if(rgb!=test && enable = 0)
-begin
-$display("***TEST FAILED! Colour is incorrect (1)");
-err = 1;
-end
-
-else if(test=rgb && enable = 1)
-begin
-$display("***TEST FAILED! Colour is incorrect (2)");
-err = 1;
-end
-
-
-
-
+enable = 1;
+#CLK_PERIOD
+test = rgb;
 enable = 0;
-
+colour <= colour+ 3'b001;
 #CLK_PERIOD
 
-if(rgb!=test && enable = 0)
-begin
-$display("***TEST FAILED! Colour is incorrect (3)");
-err = 1;
-end
 
-else if(test=rgb && enable = 1)
-begin
-$display("***TEST FAILED! Colour is incorrect (4)");
-err = 1;
-end
+if(test!=rgb)  //tests the enable function
+	begin
+	err = 1;
+	$display("***TEST FAILED Wrong Colour (2)");
+	end
 
 
 end
@@ -87,7 +72,7 @@ end
       end
      
 //Instantiate counter module
-RGB top (
+Col_Convert top (
 	.enable (enable),
 	.colour (colour),
 	.rgb (rgb),
